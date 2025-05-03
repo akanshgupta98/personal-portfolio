@@ -1,0 +1,14 @@
+services:
+  projects-service:
+    build:
+      context: ../projects-service/
+      dockerfile: ../projects-service/project-service.dockerfile
+    ports:
+      - "8081:80"
+  
+  # postgres-service:
+  #   build: 
+  #     image: postgres:latest
+  #   environment:
+  #     - P=value
+    

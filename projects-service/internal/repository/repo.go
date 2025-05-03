@@ -1,0 +1,39 @@
+package repository
+
+import (
+	"fmt"
+	"time"
+)
+
+type Project struct {
+	ID          string
+	Title       string
+	Description string
+	Status      string
+	URL         string
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+}
+
+var Projects map[string]Project
+
+func New() {
+
+	Projects = map[string]Project{}
+
+}
+
+func AddProject(data Project) error {
+	if Projects == nil {
+		New()
+	}
+	if _, ok := Projects[data.ID]; ok {
+		return fmt.Errorf("ID not unique")
+	}
+	Projects[data.ID] = data
+	return nil
+}
+
+func FetchAll() (map[string]Project, error) {
+	return Projects, nil
+}
