@@ -2,6 +2,7 @@ package repository
 
 import (
 	"fmt"
+	"log"
 	"time"
 )
 
@@ -15,7 +16,7 @@ type Project struct {
 	UpdatedAt   time.Time
 }
 
-var Projects map[string]Project
+var Projects map[string]Project = make(map[string]Project)
 
 func New() {
 
@@ -35,5 +36,9 @@ func AddProject(data Project) error {
 }
 
 func FetchAll() (map[string]Project, error) {
+	if Projects == nil {
+		log.Println("Projects NIL")
+		New()
+	}
 	return Projects, nil
 }

@@ -48,6 +48,9 @@ func FetchAll() (FetchAllData, error) {
 		}
 		result = append(result, record)
 	}
+	if result == nil {
+		result = make(FetchAllData, 1)
+	}
 
 	return result, nil
 

@@ -1,10 +1,10 @@
 package handlers
 
 type AddProjectPayload struct {
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	Link        string `json:"link"`
-	Status      string `json:"status"`
+	Title       string `json:"title" binding:"required"`
+	Description string `json:"description" binding:"required"`
+	Link        string `json:"link" binding:"url"`
+	Status      string `json:"status" binding:"required"`
 }
 
 type AddProjectResponse struct {
@@ -14,3 +14,7 @@ type AddProjectResponse struct {
 }
 
 type FetchAllResponse []AddProjectPayload
+
+type ErrorResponse struct {
+	Errors []string `json:"errors"`
+}

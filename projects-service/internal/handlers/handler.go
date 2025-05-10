@@ -16,9 +16,10 @@ func HealthCheck(c *gin.Context) {
 func AddProject(c *gin.Context) {
 
 	var reqPayload AddProjectPayload
-	err := c.BindJSON(&reqPayload)
+
+	err := readJSON(c, &reqPayload)
 	if err != nil {
-		c.AbortWithError(http.StatusBadRequest, err)
+		errorJSON(c, err, http.StatusBadRequest)
 		return
 	}
 
@@ -31,14 +32,14 @@ func AddProject(c *gin.Context) {
 
 	err = service.AddRecord(data)
 	if err != nil {
-		c.AbortWithError(http.StatusInternalServerError, err)
+		errorJSON(c, err)
 		return
 	}
 	response := AddProjectResponse{
 		Error: false,
 		Data:  reqPayload,
 	}
-	c.JSON(http.StatusOK, response)
+	writeJSON(c, response)
 
 }
 
@@ -46,7 +47,7 @@ func FetchAll(c *gin.Context) {
 
 	data, err := service.FetchAll()
 	if err != nil {
-		c.AbortWithError(http.StatusInternalServerError, err)
+		errorJSON(c, err)
 		return
 	}
 	var result FetchAllResponse
@@ -60,6 +61,6 @@ func FetchAll(c *gin.Context) {
 		result = append(result, record)
 
 	}
-	c.JSON(http.StatusOK, result)
+	writeJSON(c, result)
 
 }
